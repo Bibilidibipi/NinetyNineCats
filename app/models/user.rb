@@ -1,18 +1,13 @@
 class User < ActiveRecord::Base
   attr_reader :password
 
-  validates :user_name, :password_digest, :session_token, presence: true
-  validates :user_name, :session_token, uniqueness: true
+  validates :user_name, :password_digest, presence: true
+  validates :user_name, uniqueness: true
   validates :password, length: { minimum: 6, allow_nil: true }
-
-  after_initialize :ensure_session_token
 
   has_many :cats
   has_many :requests, class_name: :CatRentalRequest, foreign_key: :user_id
-
-  def self.generate_session_token
-    SecureRandom::urlsafe_base64(16)
-  end
+  has_many :sessions
 
   def password=(password)
     @password = password
@@ -27,17 +22,5 @@ class User < ActiveRecord::Base
     user = User.find_by_user_name(user_name)
     return nil unless user
     user.is_password?(password) ? user : nil
-  end
-
-  def reset_session_token!
-    self.session_token = self.class.generate_session_token
-    self.save!
-    self.session_token
-  end
-
-  private
-
-  def ensure_session_token
-    self.session_token ||= self.class.generate_session_token
   end
 end

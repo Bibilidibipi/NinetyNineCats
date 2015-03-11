@@ -85,7 +85,7 @@ class CatRentalRequest < ActiveRecord::Base
   end
 
   def requestor_not_owner
-    if cat_owner == requestor
+    if cat_owner.id == requestor.id
       errors[:requestor] << "can't rent own cat"
     end
   end

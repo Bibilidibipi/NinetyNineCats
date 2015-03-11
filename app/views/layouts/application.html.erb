@@ -8,7 +8,7 @@
 <body>
 
 <p>
-  <% if current_user%>
+  <% if current_user %>
     You're logged in as <%= current_user.user_name %>
     <%= button_to "Log out", session_url, method: :delete %>
   <% else %>

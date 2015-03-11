@@ -2,7 +2,10 @@
 <html>
 <head>
   <title>NinetyNineCats</title>
-  <%= flash[:errors] %>
+  <% flash[:errors] && flash[:errors].each do |message| %>
+    <br /><%= message %>
+  <% end %>
+  <%= flash[:success] %>
 </head>
 <body>
 

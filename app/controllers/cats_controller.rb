@@ -19,7 +19,7 @@ class CatsController < ApplicationController
     if @cat.save
       redirect_to cats_url
     else
-      flash.now[:errors] = 'Invalid data'
+      flash.now[:errors] = @cat.errors.full_messages
       render :new
     end
   end
@@ -30,7 +30,13 @@ class CatsController < ApplicationController
   end
 
   def update
-
+    @cat = Cat.find(params[:id])
+    if @cat.save
+      redirect_to cat_url(@cat)
+    else
+      flash.now[:errors] = @cat.errors.full_messages
+      render :new
+    end
   end
 
   private

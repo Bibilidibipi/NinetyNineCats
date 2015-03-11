@@ -21,3 +21,18 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        cat:
+          attributes:
+            sex:
+              inclusion: "must be M or F"
+            color:
+              inclusion: "must be selected"
+
+fr:
+  hello: "Bonjour, tout le monde!"
+
+es:
+  hello: '!Hola, mundo!'

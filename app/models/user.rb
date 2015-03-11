@@ -7,6 +7,9 @@ class User < ActiveRecord::Base
 
   after_initialize :ensure_session_token
 
+  has_many :cats
+  has_many :requests, class_name: :CatRentalRequest, foreign_key: :user_id
+
   def self.generate_session_token
     SecureRandom::urlsafe_base64(16)
   end

@@ -5,6 +5,9 @@
 <h1><%= title %> a cat</h1>
 
 <form action='<%= action %>' method='post'>
+  <input name='authenticity_token'
+         type='hidden'
+         value='<%= form_authenticity_token %>'>
   <input type='hidden' name='_method' value="<%=method%>">
   <label>
     Name: <input type='text' name='cat[name]' value='<%= cat.name %>'>

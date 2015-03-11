@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find_by_session_token(session[:session_token])
   end
 
+  def logged_in
+    redirect_to new_session_url unless current_user
+  end
+
   def login_user!(user)
     @current_user = user
     session[:session_token] = user.session_token

@@ -3,12 +3,14 @@ class Cat < ActiveRecord::Base
 
   COLORS = %w(black calico tabby tortie white)
 
-  validates :birth_date, :name, presence: true
+  validates :birth_date, :name, :user_id, presence: true
   validates :color, inclusion: COLORS
   validates :sex, inclusion: %w(M F)
+  validates :id, uniqueness: { scope: :user_id }
   validate :birthdate_in_past?
 
   has_many :requests, class_name: :CatRentalRequest, dependent: :destroy
+  belongs_to :owner, class_name: :User, foreign_key: :user_id
 
   def age
     time_ago_in_words(birth_date)

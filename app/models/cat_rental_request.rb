@@ -1,10 +1,13 @@
 class CatRentalRequest < ActiveRecord::Base
-  validates :cat_id, :start_date, :end_date, presence: true
+  validates :cat_id, :start_date, :end_date, :user_id, presence: true
   validates :status, inclusion: %w(PENDING APPROVED DENIED)
   validate :no_overlapping_approved_requests?
   validate :valid_dates
+  validate :requestor_not_owner
 
   belongs_to :cat
+  has_one :cat_owner, through: :cat, source: :owner
+  belongs_to :requestor, class_name: :User, foreign_key: :user_id
 
   after_initialize :set_status
 
@@ -78,6 +81,12 @@ class CatRentalRequest < ActiveRecord::Base
       unless start_date >= Date.today && end_date > start_date
         errors[:dates] << "are not valid"
       end
+    end
+  end
+
+  def requestor_not_owner
+    if cat_owner == requestor
+      errors[:requestor] << "can't rent own cat"
     end
   end
 end

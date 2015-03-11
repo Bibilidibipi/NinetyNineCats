@@ -2,8 +2,8 @@
 
 <table>
   <tr>
-    <td>Name:</td>
-    <td><%= @cat.name.capitalize %></td>
+    <td>Owner:</td>
+    <td><%= @cat.owner.user_name %></td>
   </tr>
   <tr>
     <td>Age:</td>
@@ -23,20 +23,25 @@
   </tr>
 </table>
 
+<br />
+<%= link_to "Edit cat", edit_cat_url(@cat) if current_user && current_user.id == @cat.user_id %>
+
 <h2>Requests</h2>
 <table>
   <tr>
+    <th align="center">Requestor</th>
     <th align="center">Start Date</th>
     <th align="center">End Date</th>
     <th align="center" colspan="2">Approve/Deny</th>
   </tr>
   <% @cat.sorted_requests.each do |request| %>
     <tr>
+      <td><%= request.requestor.user_name %></td>
       <td><%= request.start_date %></td>
       <td><%= request.end_date %></td>
-      <% if request.status == 'PENDING' %>
-        <td><%= button_to "Approve", approve_cat_rental_request_url(id: request.id) %></td>
-        <td><%= button_to "Deny", deny_cat_rental_request_url(id: request.id) %></td>
+      <% if request.status == 'PENDING' && current_user && current_user.id == @cat.user_id %>
+        <td><%= button_to "Approve", approve_cat_rental_request_url(request) %></td>
+        <td><%= button_to "Deny", deny_cat_rental_request_url(request) %></td>
       <% else %>
         <td><%= request.status%></td>
       <% end %>

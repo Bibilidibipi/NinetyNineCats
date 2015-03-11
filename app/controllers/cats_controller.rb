@@ -17,6 +17,7 @@ class CatsController < ApplicationController
   def create
     @cat = Cat.new(cat_params)
     if @cat.save
+      flash[:notice] = "Successfully created cat!"
       redirect_to cats_url
     else
       flash.now[:errors] = @cat.errors.full_messages
@@ -32,6 +33,7 @@ class CatsController < ApplicationController
   def update
     @cat = Cat.find(params[:id])
     if @cat.save
+      flash[:notice] = "Successfully updated cat!"
       redirect_to cat_url(@cat)
     else
       flash.now[:errors] = @cat.errors.full_messages

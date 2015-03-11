@@ -30,6 +30,9 @@ en:
               inclusion: "must be M or F"
             color:
               inclusion: "must be selected"
+        user:
+          attributes:
+            password_digest: 'password'
 
 fr:
   hello: "Bonjour, tout le monde!"

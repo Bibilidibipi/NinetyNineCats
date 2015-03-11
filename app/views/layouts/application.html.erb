@@ -2,12 +2,23 @@
 <html>
 <head>
   <title>NinetyNineCats</title>
-  <% flash[:errors] && flash[:errors].each do |message| %>
-    <br /><%= message %>
-  <% end %>
-  <%= flash[:success] %>
+  <%= render partial: 'layouts/errors' %>
+  <%= flash[:notice] %>
 </head>
 <body>
+
+<p>
+  <% if current_user%>
+    You're logged in as <%= current_user.user_name %>
+    <%= button_to "Log out", session_url, method: :delete %>
+  <% else %>
+    <% if params[:controller] == 'sessions' %>
+      <%= link_to "Sign up", new_user_url %>
+    <% else %>
+      <%= link_to "Log in", new_session_url %>
+    <% end %>
+  <% end %>
+</p>
 
 <%= yield %>
 

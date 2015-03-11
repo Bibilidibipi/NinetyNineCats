@@ -8,4 +8,6 @@ NinetyNineCats::Application.routes.draw do
       post 'deny'
     end
   end
+  resource :user, only: [:create, :new]
+  resource :session, only: [:create, :new, :destroy]
 end

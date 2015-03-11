@@ -6,7 +6,7 @@ class CatRentalRequestsController < ApplicationController
   def create
     @request = CatRentalRequest.new(request_params)
     if @request.save
-      flash[:success] = "Request submitted"
+      flash[:notice] = "Request submitted"
       redirect_to cat_url(@request.cat)
     else
       flash[:errors] = @request.errors.full_messages
@@ -17,7 +17,7 @@ class CatRentalRequestsController < ApplicationController
   def approve
     @request = CatRentalRequest.find(params[:id])
     if @request.approve!
-      flash[:success] = "Request approved :)"
+      flash[:notice] = "Request approved :)"
     else
       flash[:errors] = @request.errors.full_messages
     end
@@ -27,7 +27,7 @@ class CatRentalRequestsController < ApplicationController
   def deny
     @request = CatRentalRequest.find(params[:id])
     if @request.deny!
-      flash[:success] = "Request denied :("
+      flash[:notice] = "Request denied :("
     else
       flash[:errors] = @request.errors.full_messages
     end

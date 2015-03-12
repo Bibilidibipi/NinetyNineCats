@@ -1,9 +1,7 @@
 <h1>Create a request</h1>
 
 <form action="<%= cat_rental_requests_path %>" method='post' %>
-  <input name='authenticity_token'
-         type='hidden'
-         value='<%= form_authenticity_token %>'>
+  <%= render partial: 'layouts/authenticate' %>
   <label>Cat:
     <select name='cat_rental_request[cat_id]'>
     <% Cat.all.each do |cat| %>

@@ -1,0 +1,11 @@
+  <form action="<%= logout_url %>" method="post">
+  <%= render partial: 'layouts/authenticate' %>
+  <label>Where would you like to logout from?
+    <br />
+    <input type='radio' checked='checked' name='location' value='here'> Here
+    <input type='radio' name='location' value='elsewhere'> Everywhere Else
+    <input type='radio' name='location' value='everywhere'> Everywhere
+    <br />
+    <input type='submit' value='Log out!'>
+  </label>
+</form>

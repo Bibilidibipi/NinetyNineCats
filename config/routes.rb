@@ -10,4 +10,7 @@ NinetyNineCats::Application.routes.draw do
   end
   resource :user, only: [:create, :new]
   resource :session, only: [:create, :new, :destroy]
+
+  get 'logout' => 'application#render_logout'
+  post 'logout' => 'application#logout'
 end

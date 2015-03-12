@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  before_action :logged_in, only: [:render_logout]
 
   helper_method :current_user, :current_session
 
@@ -23,9 +24,27 @@ class ApplicationController < ActionController::Base
     session[:session_token] = @current_session.session_token
   end
 
-  def logout!
-    current_session.try(:remove_session!)
-    session[:session_token] = nil
+  def render_logout
+    render partial: 'layouts/logout'
+  end
+
+  def logout
+    # unfortunately cannot zero out other browsers' sessions
+    case params[:location]
+    when 'here'
+      current_session.try(:remove_session!)
+      session[:session_token] = nil
+    when 'elsewhere'
+      current_user.sessions.each do |session|
+        next if session.id == current_session.id
+        session.try(:remove_session!)
+      end
+    else
+      current_user.sessions.each { |session| session.try(:remove_session!) }
+      session[:session_token] = nil
+    end
+
+    redirect_to cats_url
   end
 
   def redirect_cats
